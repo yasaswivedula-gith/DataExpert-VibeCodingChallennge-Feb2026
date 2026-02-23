@@ -4,51 +4,85 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  url      = env("DATABASE_URL")
 }
 
-enum PostStatus {
-  DRAFT
-  PUBLISHED
-  ARCHIVED
+// Task Status: todo, in_progress, completed
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  COMPLETED
 }
 
-enum SubscriberStatus {
+// Task Priority: low, medium, high
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+// Workflow Status: active, paused
+enum WorkflowStatus {
   ACTIVE
-  UNSUBSCRIBED
+  PAUSED
 }
 
-model Author {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  posts     Post[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// User model for authentication
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  tasks        Task[]
+  workflows    Workflow[]
 }
 
-model Post {
-  id               String     @id @default(uuid())
-  title            String     @default("")
-  contentMarkdown  String     @db.Text
-  author           Author     @relation(fields: [authorId], references: [id])
-  authorId         String
-  isPaid           Boolean    @default(false)
-  status           PostStatus @default(DRAFT)
-  emailSentAt      DateTime?
-  publishedAt      DateTime?
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+// Task model - core productivity unit
+model Task {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  status      TaskStatus   @default(TODO)
+  priority    TaskPriority @default(MEDIUM)
+  dueDate     DateTime?
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
-  @@index([authorId])
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+}
+
+// Workflow model - automation sequences
+model Workflow {
+  id          String        @id @default(uuid())
+  name        String
+  description String?
+  trigger     String
+  status      WorkflowStatus @default(ACTIVE)
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([userId])
   @@index([status])
 }
 
-model Subscriber {
-  id        String           @id @default(uuid())
-  email     String           @unique
-  status    SubscriberStatus @default(ACTIVE)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+// AI Suggestion model - stores AI-generated recommendations
+model AISuggestion {
+  id        String   @id @default(uuid())
+  title     String
+  impact    String
+  savings   String
+  applied   Boolean  @default(false)
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([applied])
 }

@@ -9,7 +9,7 @@ export async function getAuthenticatedAuthor() {
 
   if (!user) return null;
 
-  const author = await prisma.author.findUnique({
+  const author = await prisma.user.findUnique({
     where: { email: user.email! },
   });
 
