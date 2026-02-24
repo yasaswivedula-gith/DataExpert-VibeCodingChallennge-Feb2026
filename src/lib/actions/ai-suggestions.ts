@@ -2,6 +2,7 @@
 
 import { prisma } from "../prisma";
 import { getAuthenticatedAuthor } from "../auth";
+import { rateLimit } from "../rate-limit";
 
 export interface AISuggestionInput {
   taskTitle?: string;
@@ -15,6 +16,12 @@ export async function generateAISuggestion(input: AISuggestionInput) {
   const author = await getAuthenticatedAuthor();
   if (!author) {
     throw new Error("Unauthorized - must be logged in");
+  }
+  
+  // Apply rate limiting to protect costs (5 suggestions per hour per user)
+  const rateLimitResult = rateLimit(author.id, 5, 60 * 60 * 1000);
+  if (!rateLimitResult.allowed) {
+    throw new Error(`Rate limit exceeded. Try again in ${Math.ceil(rateLimitResult.resetIn / 60000)} minutes.`);
   }
   
   const userId = author.id; // Use the authenticated user's ID
