@@ -31,7 +31,7 @@ A Next.js SaaS application for AI-powered workflow automation for small teams an
 
 ```bash
 # Clone the repository
-git clone https://github.com/yasaswivedula-gith/DataExpert-VibeCodingChallennge-Feb2026/tree/master
+git clone https://github.com/yasaswivedula-gith/DataExpert-VibeCodingChallennge-Feb2026.git
 cd webapp
 
 # Install dependencies
