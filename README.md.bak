@@ -4,20 +4,21 @@ A Next.js SaaS application for AI-powered workflow automation for small teams an
 
 ## Tech Stack
 
-- **Framework**: Next.js 16.1.6 (App Router)
-- **UI**: React 19.2.3, Tailwind CSS 4
-- **Language**: TypeScript 5
+- **Framework**: Next.js 14+ (App Router)
+- **UI**: React 18+, Tailwind CSS
+- **Language**: TypeScript
 - **Database**: PostgreSQL (Supabase)
 - **Auth**: Supabase Auth (synced with Prisma)
 - **Deployment**: Vercel
 
 ## Live Demo
 
-- **Production URL**: https://taskflow-ai-virid.vercel.app
+- **Production URL**: https://vercel.com/yasaswivedula-giths-projects/data-expert-vibe-coding-challennge-feb2026
 
 ## Demo Credentials
 
 - **Email**: demo@taskflow.ai
+- **Password**: Demo123!
 
 ## Getting Started
 
@@ -123,10 +124,13 @@ webapp/
 - `/auth/login` - Login (public)
 - `/auth/signup` - Signup (public)
 - `/dashboard` - Dashboard (protected, requires login)
+- `/dashboard/tasks` - Tasks management
+- `/dashboard/workflows` - Workflows management
+- `/dashboard/ai-suggestions` - AI Suggestions
 
 ## Happy Path Demo Instructions
 
-1. Visit https://taskflow-ai-virid.vercel.app
+1. Visit https://vercel.com/yasaswivedula-giths-projects/data-expert-vibe-coding-challennge-feb2026
 2. Click "Get Started Free" or go to /auth/signup
 3. Sign up with any email/password
 4. You'll be redirected to /dashboard
