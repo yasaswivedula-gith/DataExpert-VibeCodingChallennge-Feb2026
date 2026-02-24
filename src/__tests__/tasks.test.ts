@@ -7,7 +7,6 @@ vi.mock("../lib/prisma", () => ({
       create: vi.fn(),
       findMany: vi.fn(),
       findUnique: vi.fn(),
-      findFirst: vi.fn(),
       update: vi.fn(),
       delete: vi.fn(),
     },
@@ -20,23 +19,23 @@ describe("Task Utilities", () => {
   });
 
   describe("getPriorityColor", () => {
-    it("should return correct color for HIGH priority", () => {
+    it("should return correct color for high priority", () => {
       const getPriorityColor = (priority: string) => {
         switch (priority) {
-          case "HIGH":
+          case "high":
             return "text-red-400 bg-red-500/10";
-          case "MEDIUM":
+          case "medium":
             return "text-yellow-400 bg-yellow-500/10";
-          case "LOW":
+          case "low":
             return "text-green-400 bg-green-500/10";
           default:
             return "text-neutral-400 bg-neutral-500/10";
         }
       };
 
-      expect(getPriorityColor("HIGH")).toBe("text-red-400 bg-red-500/10");
-      expect(getPriorityColor("MEDIUM")).toBe("text-yellow-400 bg-yellow-500/10");
-      expect(getPriorityColor("LOW")).toBe("text-green-400 bg-green-500/10");
+      expect(getPriorityColor("high")).toBe("text-red-400 bg-red-500/10");
+      expect(getPriorityColor("medium")).toBe("text-yellow-400 bg-yellow-500/10");
+      expect(getPriorityColor("low")).toBe("text-green-400 bg-green-500/10");
     });
   });
 
@@ -44,20 +43,20 @@ describe("Task Utilities", () => {
     it("should return correct color for task statuses", () => {
       const getStatusColor = (status: string) => {
         switch (status) {
-          case "COMPLETED":
+          case "completed":
             return "text-green-400";
-          case "IN_PROGRESS":
+          case "in_progress":
             return "text-blue-400";
-          case "TODO":
+          case "todo":
             return "text-neutral-400";
           default:
             return "text-neutral-400";
         }
       };
 
-      expect(getStatusColor("COMPLETED")).toBe("text-green-400");
-      expect(getStatusColor("IN_PROGRESS")).toBe("text-blue-400");
-      expect(getStatusColor("TODO")).toBe("text-neutral-400");
+      expect(getStatusColor("completed")).toBe("text-green-400");
+      expect(getStatusColor("in_progress")).toBe("text-blue-400");
+      expect(getStatusColor("todo")).toBe("text-neutral-400");
     });
   });
 
@@ -66,23 +65,23 @@ describe("Task Utilities", () => {
       interface Task {
         id: string;
         title: string;
-        status: "TODO" | "IN_PROGRESS" | "COMPLETED";
-        priority: "LOW" | "MEDIUM" | "HIGH";
+        status: "todo" | "in_progress" | "completed";
+        priority: "low" | "medium" | "high";
         dueDate?: string;
       }
 
       const validTask: Task = {
         id: "1",
         title: "Test Task",
-        status: "IN_PROGRESS",
-        priority: "HIGH",
+        status: "in_progress",
+        priority: "high",
         dueDate: "2026-02-23",
       };
 
       expect(validTask.id).toBeDefined();
       expect(validTask.title).toBe("Test Task");
-      expect(validTask.status).toBe("IN_PROGRESS");
-      expect(validTask.priority).toBe("HIGH");
+      expect(validTask.status).toBe("in_progress");
+      expect(validTask.priority).toBe("high");
     });
   });
 });
@@ -99,14 +98,14 @@ describe("Input Validation", () => {
   });
 
   it("should validate priority values", () => {
-    const validPriorities = ["LOW", "MEDIUM", "HIGH"];
+    const validPriorities = ["low", "medium", "high"];
     const isValidPriority = (priority: string) => {
       return validPriorities.includes(priority);
     };
 
-    expect(isValidPriority("LOW")).toBe(true);
-    expect(isValidPriority("MEDIUM")).toBe(true);
-    expect(isValidPriority("HIGH")).toBe(true);
-    expect(isValidPriority("INVALID")).toBe(false);
+    expect(isValidPriority("low")).toBe(true);
+    expect(isValidPriority("medium")).toBe(true);
+    expect(isValidPriority("high")).toBe(true);
+    expect(isValidPriority("invalid")).toBe(false);
   });
 });

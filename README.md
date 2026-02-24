@@ -123,10 +123,10 @@ webapp/
 - `/` - Landing page (public)
 - `/auth/login` - Login (public)
 - `/auth/signup` - Signup (public)
-- `/dashboard` - Dashboard with tabs (protected, requires login)
-  - **Tasks tab** - Create and manage tasks
-  - **Workflows tab** - View automated workflows
-  - **AI Suggestions tab** - AI-powered recommendations
+- `/dashboard` - Dashboard (protected, requires login)
+- `/dashboard/tasks` - Tasks management
+- `/dashboard/workflows` - Workflows management
+- `/dashboard/ai-suggestions` - AI Suggestions
 
 ## Happy Path Demo Instructions
 
