@@ -25,7 +25,47 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { pathname } = request.nextUrl;
+
+  // Protected routes that require authentication
+  const protectedRoutes = ["/dashboard"];
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
+
+  // Auth routes that should redirect to dashboard if already logged in
+  const authRoutes = ["/auth/login", "/auth/signup"];
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
+
+  if (isProtectedRoute && !user) {
+    const redirectUrl = new URL("/auth/login", request.url);
+    redirectUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (isAuthRoute && user) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
 
   return supabaseResponse;
 }
+
+// Next.js middleware entry point with matcher config
+export default function middleware(request: NextRequest) {
+  return updateSession(request);
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+};

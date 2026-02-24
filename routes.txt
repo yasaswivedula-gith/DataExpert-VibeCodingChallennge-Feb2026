@@ -12,14 +12,15 @@
 /dashboard/workflows   # Workflows management  
 /dashboard/ai-suggestions  # AI Assistant suggestions
 
-## API Routes (future expansion)
-/api/auth              # Authentication endpoints
-/api/tasks            # Task CRUD operations
-/api/workflows         # Workflow CRUD operations
+## Server Actions (implemented)
+/api/auth              # Handled via Supabase Auth
+/api/tasks            # Task CRUD via Server Actions (src/lib/actions/tasks.ts)
+/api/workflows         # Workflow management via Server Actions
 
 ## Route Protection
 - Public: /, /auth/*
 - Protected: /dashboard/* (redirect to /auth/login if not authenticated)
+- Middleware: middleware.ts with matcher for all routes
 
 ## Tech Stack
 - Next.js 16.1.6 (App Router)

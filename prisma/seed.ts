@@ -5,14 +5,16 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Seeding database...");
 
-  // Create demo user
+  // Create demo user - NOTE: This user must also be created in Supabase Auth
+  // The supabaseUserId should match the Supabase auth.users id
+  // For demo purposes, we use a placeholder - in production, create user in Supabase first
   const demoUser = await prisma.user.upsert({
     where: { email: "demo@taskflow.ai" },
     update: {},
     create: {
       email: "demo@taskflow.ai",
       name: "Demo User",
-      passwordHash: "hashed_Demo123!", // In production, use proper hashing
+      supabaseUserId: "9932abf7-afc2-40b0-9f5d-3cc2359c4794", // Supabase Auth user ID
     },
   });
 
