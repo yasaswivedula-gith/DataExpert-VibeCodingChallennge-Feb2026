@@ -13,9 +13,9 @@
 /dashboard/ai-suggestions  # AI Assistant suggestions
 
 ## Server Actions (implemented)
-/api/auth              # Handled via Supabase Auth
-/api/tasks            # Task CRUD via Server Actions (src/lib/actions/tasks.ts)
-/api/workflows         # Workflow management via Server Actions
+# Note: Using Server Actions instead of HTTP API routes
+# Task CRUD via src/lib/actions/tasks.ts
+# AI Suggestions via src/lib/actions/ai-suggestions.ts
 
 ## Route Protection
 - Public: /, /auth/*
@@ -23,8 +23,8 @@
 - Middleware: middleware.ts with matcher for all routes
 
 ## Tech Stack
-- Next.js 16.1.6 (App Router)
-- React 19.2.3
-- Tailwind CSS 4
-- TypeScript 5
+- Next.js 14+ (App Router)
+- React 18+
+- Tailwind CSS
+- TypeScript
 - Vercel (Deployment)
