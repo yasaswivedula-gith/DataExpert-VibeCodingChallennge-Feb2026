@@ -130,7 +130,7 @@ webapp/
 
 ## Happy Path Demo Instructions
 
-1. Visit https://vercel.com/yasaswivedula-giths-projects/data-expert-vibe-coding-challennge-feb2026
+1. Visit https://data-expert-vibe-coding-challennge.vercel.app/
 2. Click "Get Started Free" or go to /auth/signup
 3. Sign up with any email/password
 4. You'll be redirected to /dashboard
